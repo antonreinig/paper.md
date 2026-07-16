@@ -57,7 +57,14 @@ final class WorkspaceStore: ObservableObject {
     }
 
     func openDocument(_ url: URL) {
-        if rootURL == nil { openWorkspace(url.deletingLastPathComponent()) }
+        if let rootURL, url.standardizedFileURL.path.hasPrefix(rootURL.standardizedFileURL.path + "/") {
+            select(url)
+            return
+        }
+        stopSecurityScope()
+        if url.startAccessingSecurityScopedResource() { securityScopedURL = url }
+        rootURL = url.deletingLastPathComponent()
+        items = [WorkspaceItem(url: url, isDirectory: false, children: nil)]
         select(url)
     }
 

@@ -3,6 +3,7 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject private var workspace: WorkspaceStore
+    @AppStorage("appearance") private var appearance = "system"
 
     var body: some View {
         NavigationSplitView {
@@ -30,9 +31,13 @@ struct RootView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
             workspace.session?.flush()
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { _ in
+            workspace.session?.flush()
+        }
         .onReceive(NSWorkspace.shared.notificationCenter.publisher(for: NSWorkspace.willSleepNotification)) { _ in
             workspace.session?.flush()
         }
+        .preferredColorScheme(preferredColorScheme)
     }
 
     private var errorIsPresented: Binding<Bool> {
@@ -40,6 +45,14 @@ struct RootView: View {
             get: { workspace.errorMessage != nil || workspace.session?.errorMessage != nil },
             set: { if !$0 { workspace.errorMessage = nil; workspace.session?.errorMessage = nil } }
         )
+    }
+
+    private var preferredColorScheme: ColorScheme? {
+        switch appearance {
+        case "light": .light
+        case "dark": .dark
+        default: nil
+        }
     }
 }
 
