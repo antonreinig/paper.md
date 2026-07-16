@@ -12,7 +12,7 @@ settings:
     ARCHS: arm64
     ONLY_ACTIVE_ARCH: NO
     CODE_SIGN_STYLE: Automatic
-    DEVELOPMENT_TEAM: 9SLF673VW4
+    DEVELOPMENT_TEAM: 8DTMQ4N2LA
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: 0.1.0
     DEAD_CODE_STRIPPING: YES
@@ -27,10 +27,12 @@ targets:
     sources:
       - path: App
         excludes:
-          - Resources/Editor
-    resources:
-      - path: App/Resources/Editor
+          - Resources
+      - path: BundledEditor/index.html
+        buildPhase: resources
+      - path: BundledEditor/assets
         type: folder
+        buildPhase: resources
     dependencies:
       - target: MarkdownQuickLook
         embed: true

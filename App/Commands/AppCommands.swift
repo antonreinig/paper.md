@@ -16,6 +16,14 @@ struct WorkspaceCommands: Commands {
             Button("Save") { workspace.session?.flush() }
                 .keyboardShortcut("s", modifiers: .command)
                 .disabled(workspace.session == nil)
+
+            Divider()
+
+            Button("Close Window") {
+                workspace.session?.flush()
+                (NSApp.keyWindow ?? NSApp.mainWindow)?.performClose(nil)
+            }
+            .keyboardShortcut("w", modifiers: .command)
         }
     }
 }
@@ -71,4 +79,3 @@ struct EditorCommands: Commands {
         performEditorCommand(.link, payload: ["url": field.stringValue])
     }
 }
-

@@ -6,6 +6,7 @@ build/
 xcuserdata/
 Editor/node_modules/
 App/Resources/Editor/
+BundledEditor/
 work/
 *.dmg
 *.xcarchive

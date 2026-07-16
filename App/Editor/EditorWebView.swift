@@ -20,7 +20,7 @@ struct EditorWebView: NSViewRepresentable {
         webView.setValue(false, forKey: "drawsBackground")
         context.coordinator.webView = webView
 
-        guard let indexURL = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "Editor") else {
+        guard let indexURL = Bundle.main.url(forResource: "index", withExtension: "html") else {
             context.coordinator.reportMissingEditor()
             return webView
         }
