@@ -23,3 +23,14 @@ Public binaries must be signed with a Developer ID Application certificate, use 
 
 Never store certificates, `.p8` files, passwords, or notary credentials in the repository.
 
+## GitHub environment
+
+The manual `Release` workflow performs the archive, Developer ID signing, DMG creation, notarization, stapling, validation, and GitHub Release publication. Create a protected GitHub environment named `release` and add these secrets:
+
+- `APPLE_CERTIFICATE_BASE64`
+- `APPLE_CERTIFICATE_PASSWORD`
+- `KEYCHAIN_PASSWORD`
+- `APPLE_API_KEY_BASE64`
+- `APPLE_API_KEY_ID`
+- `APPLE_API_ISSUER_ID`
+- `APPLE_TEAM_ID`
