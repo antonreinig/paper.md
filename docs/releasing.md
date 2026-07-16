@@ -1,4 +1,4 @@
-# Releasing Markdown Viewer
+# Releasing paper.md
 
 Public binaries must be signed with a Developer ID Application certificate, use the hardened runtime, and be notarized by Apple. Development builds and CI builds intentionally do not contain distribution credentials.
 
@@ -14,7 +14,7 @@ Public binaries must be signed with a Developer ID Application certificate, use 
 1. Update `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` in `project.yml`.
 2. Run `./scripts/test.sh`.
 3. Generate the project with `./scripts/bootstrap.sh`.
-4. Archive the `MarkdownViewer` scheme with the Developer ID identity.
+4. Archive the `PaperMD` scheme with the Developer ID identity.
 5. Export the app for Developer ID distribution.
 6. Put the app in a DMG, sign the DMG, and submit it with `xcrun notarytool`.
 7. Staple and validate the ticket with `xcrun stapler`.

@@ -11,11 +11,10 @@ struct SettingsView: View {
                 Text("Dark").tag("dark")
             }
             .pickerStyle(.segmented)
-            Text("Documents are saved automatically while you type. Markdown Viewer does not send document content over the network.")
+            Text("Documents are saved automatically while you type. paper.md does not send document content over the network.")
                 .foregroundStyle(.secondary)
         }
         .padding(20)
         .frame(width: 460)
     }
 }
-

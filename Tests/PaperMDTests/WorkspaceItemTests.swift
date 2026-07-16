@@ -1,5 +1,5 @@
 import XCTest
-@testable import MarkdownViewer
+@testable import PaperMD
 
 final class WorkspaceItemTests: XCTestCase {
     func testRecognizedMarkdownExtensions() {
@@ -8,4 +8,3 @@ final class WorkspaceItemTests: XCTestCase {
         XCTAssertFalse(WorkspaceItem.markdownExtensions.contains("txt"))
     }
 }
-

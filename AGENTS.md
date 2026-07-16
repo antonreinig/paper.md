@@ -1,6 +1,6 @@
-# Markdown Viewer contributor guide
+# paper.md contributor guide
 
-Markdown Viewer is an offline-first, Apple-Silicon macOS app for editing ordinary Markdown files.
+paper.md is an offline-first, Apple-Silicon macOS app for editing ordinary Markdown files.
 
 ## Product invariants
 
@@ -18,7 +18,7 @@ Markdown Viewer is an offline-first, Apple-Silicon macOS app for editing ordinar
 ./scripts/test.sh
 ```
 
-`project.yml` is the source of truth for the generated Xcode project. Do not hand-edit `MarkdownViewer.xcodeproj`.
+`project.yml` is the source of truth for the generated Xcode project. Do not hand-edit `PaperMD.xcodeproj`.
 
 ## Verification
 
@@ -26,4 +26,3 @@ Markdown Viewer is an offline-first, Apple-Silicon macOS app for editing ordinar
 - Run `xcodebuild test` through `./scripts/test.sh` for Swift changes.
 - Add round-trip fixtures for Markdown serialization changes.
 - Never commit signing credentials, notarization credentials, or generated dependency directories.
-

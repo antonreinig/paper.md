@@ -7,13 +7,12 @@ npm test
 npm run build
 
 cd "$ROOT"
-if [ ! -d MarkdownViewer.xcodeproj ]; then
+if [ ! -d PaperMD.xcodeproj ]; then
   ./scripts/bootstrap.sh
 fi
 xcodebuild test \
-  -project MarkdownViewer.xcodeproj \
-  -scheme MarkdownViewer \
+  -project PaperMD.xcodeproj \
+  -scheme PaperMD \
   -destination 'platform=macOS,arch=arm64' \
   -derivedDataPath DerivedData \
   CODE_SIGNING_ALLOWED=NO
-

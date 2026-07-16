@@ -10,7 +10,7 @@ enum EditorCommandName: String, Sendable {
 }
 
 extension Notification.Name {
-    static let editorCommand = Notification.Name("MarkdownViewer.editorCommand")
+    static let editorCommand = Notification.Name("PaperMD.editorCommand")
 }
 
 func performEditorCommand(_ command: EditorCommandName, payload: [String: String] = [:]) {
@@ -20,4 +20,3 @@ func performEditorCommand(_ command: EditorCommandName, payload: [String: String
         userInfo: ["command": command.rawValue, "payload": payload]
     )
 }
-

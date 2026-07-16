@@ -1,5 +1,5 @@
 import XCTest
-@testable import MarkdownViewer
+@testable import PaperMD
 
 final class MergeEngineTests: XCTestCase {
     func testRemoteChangeWinsWhenLocalIsUnchanged() {
@@ -21,4 +21,3 @@ final class MergeEngineTests: XCTestCase {
         XCTAssertEqual(MergeEngine.merge(base: "a\nb", local: "a\nlocal", remote: "a\nremote"), .conflict)
     }
 }
-

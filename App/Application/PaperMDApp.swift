@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 
 @main
-struct MarkdownViewerApp: App {
+struct PaperMDApp: App {
     @StateObject private var workspace = WorkspaceStore()
 
     var body: some Scene {
@@ -24,4 +24,3 @@ struct MarkdownViewerApp: App {
         }
     }
 }
-

@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C67E8A6179C1E98775DBDA09"
-               BuildableName = "MarkdownViewer.app"
-               BlueprintName = "MarkdownViewer"
-               ReferencedContainer = "container:MarkdownViewer.xcodeproj">
+               BlueprintIdentifier = "6D14167B1D61B6FB32D1340E"
+               BuildableName = "PaperMD.app"
+               BlueprintName = "PaperMD"
+               ReferencedContainer = "container:PaperMD.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,10 +33,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C67E8A6179C1E98775DBDA09"
-            BuildableName = "MarkdownViewer.app"
-            BlueprintName = "MarkdownViewer"
-            ReferencedContainer = "container:MarkdownViewer.xcodeproj">
+            BlueprintIdentifier = "6D14167B1D61B6FB32D1340E"
+            BuildableName = "PaperMD.app"
+            BlueprintName = "PaperMD"
+            ReferencedContainer = "container:PaperMD.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -45,10 +45,10 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DC766F055D01A804FED92AC0"
-               BuildableName = "MarkdownViewerTests.xctest"
-               BlueprintName = "MarkdownViewerTests"
-               ReferencedContainer = "container:MarkdownViewer.xcodeproj">
+               BlueprintIdentifier = "5369A063A354FA53BC8B4953"
+               BuildableName = "PaperMDTests.xctest"
+               BlueprintName = "PaperMDTests"
+               ReferencedContainer = "container:PaperMD.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -69,10 +69,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C67E8A6179C1E98775DBDA09"
-            BuildableName = "MarkdownViewer.app"
-            BlueprintName = "MarkdownViewer"
-            ReferencedContainer = "container:MarkdownViewer.xcodeproj">
+            BlueprintIdentifier = "6D14167B1D61B6FB32D1340E"
+            BuildableName = "PaperMD.app"
+            BlueprintName = "PaperMD"
+            ReferencedContainer = "container:PaperMD.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -88,10 +88,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C67E8A6179C1E98775DBDA09"
-            BuildableName = "MarkdownViewer.app"
-            BlueprintName = "MarkdownViewer"
-            ReferencedContainer = "container:MarkdownViewer.xcodeproj">
+            BlueprintIdentifier = "6D14167B1D61B6FB32D1340E"
+            BuildableName = "PaperMD.app"
+            BlueprintName = "PaperMD"
+            ReferencedContainer = "container:PaperMD.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>

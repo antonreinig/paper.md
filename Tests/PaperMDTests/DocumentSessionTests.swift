@@ -1,5 +1,5 @@
 import XCTest
-@testable import MarkdownViewer
+@testable import PaperMD
 
 @MainActor
 final class DocumentSessionTests: XCTestCase {

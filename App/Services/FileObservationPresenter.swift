@@ -9,7 +9,7 @@ final class FileObservationPresenter: NSObject, NSFilePresenter, @unchecked Send
     init(url: URL, onChange: @escaping @Sendable () -> Void, onMove: @escaping @Sendable (URL) -> Void) {
         presentedItemURL = url
         presentedItemOperationQueue = OperationQueue()
-        presentedItemOperationQueue.name = "com.antonreinig.MarkdownViewer.file-presenter"
+        presentedItemOperationQueue.name = "com.antonreinig.PaperMD.file-presenter"
         presentedItemOperationQueue.maxConcurrentOperationCount = 1
         self.onChange = onChange
         self.onMove = onMove
@@ -19,4 +19,3 @@ final class FileObservationPresenter: NSObject, NSFilePresenter, @unchecked Send
     func presentedItemDidChange() { onChange() }
     func presentedItemDidMove(to newURL: URL) { onMove(newURL) }
 }
-

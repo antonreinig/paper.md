@@ -1,11 +1,11 @@
 import XCTest
-@testable import MarkdownViewer
+@testable import PaperMD
 
 final class BundleResourceTests: XCTestCase {
     func testEditorEntryPointIsBundled() throws {
         let url = try XCTUnwrap(Bundle.main.url(forResource: "index", withExtension: "html"))
         let html = try String(contentsOf: url, encoding: .utf8)
-        XCTAssertTrue(html.contains("Markdown Viewer Editor"))
+        XCTAssertTrue(html.contains("paper.md Editor"))
     }
 
     func testEditorScriptIsBundled() throws {
@@ -22,4 +22,3 @@ final class BundleResourceTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: script.path))
     }
 }
-

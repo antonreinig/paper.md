@@ -1,4 +1,4 @@
-name: MarkdownViewer
+name: PaperMD
 options:
   bundleIdPrefix: com.antonreinig
   deploymentTarget:
@@ -21,7 +21,7 @@ packages:
     url: https://github.com/swiftlang/swift-markdown.git
     from: 0.8.0
 targets:
-  MarkdownViewer:
+  PaperMD:
     type: application
     platform: macOS
     sources:
@@ -34,20 +34,21 @@ targets:
         type: folder
         buildPhase: resources
     dependencies:
-      - target: MarkdownQuickLook
+      - target: PaperMDQuickLook
         embed: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.antonreinig.MarkdownViewer
+        PRODUCT_BUNDLE_IDENTIFIER: com.antonreinig.PaperMD
+        PRODUCT_MODULE_NAME: PaperMD
         INFOPLIST_FILE: App/Info.plist
-        CODE_SIGN_ENTITLEMENTS: App/MarkdownViewer.entitlements
+        CODE_SIGN_ENTITLEMENTS: App/PaperMD.entitlements
         ENABLE_HARDENED_RUNTIME: YES
         GENERATE_INFOPLIST_FILE: NO
     scheme:
       testTargets:
-        - MarkdownViewerTests
+        - PaperMDTests
       gatherCoverageData: true
-  MarkdownQuickLook:
+  PaperMDQuickLook:
     type: app-extension
     platform: macOS
     sources:
@@ -57,21 +58,22 @@ targets:
         product: Markdown
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.antonreinig.MarkdownViewer.QuickLook
-        PRODUCT_NAME: Markdown Viewer Quick Look
+        PRODUCT_BUNDLE_IDENTIFIER: com.antonreinig.PaperMD.QuickLook
+        PRODUCT_MODULE_NAME: PaperMDQuickLook
         INFOPLIST_FILE: QuickLook/Info.plist
         CODE_SIGN_ENTITLEMENTS: QuickLook/QuickLook.entitlements
         SKIP_INSTALL: YES
         ENABLE_HARDENED_RUNTIME: YES
         GENERATE_INFOPLIST_FILE: NO
-  MarkdownViewerTests:
+  PaperMDTests:
     type: bundle.unit-test
     platform: macOS
     sources:
-      - Tests/MarkdownViewerTests
+      - Tests/PaperMDTests
     dependencies:
-      - target: MarkdownViewer
+      - target: PaperMD
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.antonreinig.MarkdownViewerTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.antonreinig.PaperMDTests
+        PRODUCT_MODULE_NAME: PaperMDTests
         GENERATE_INFOPLIST_FILE: YES

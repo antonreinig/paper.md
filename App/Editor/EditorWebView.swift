@@ -57,7 +57,7 @@ struct EditorWebView: NSViewRepresentable {
     @MainActor
     final class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
         static let messageNames = ["ready", "documentChanged", "selectionChanged", "openLink", "editorError"]
-        private let logger = Logger(subsystem: "com.antonreinig.MarkdownViewer", category: "EditorBridge")
+        private let logger = Logger(subsystem: "com.antonreinig.PaperMD", category: "EditorBridge")
         weak var webView: WKWebView?
         var session: DocumentSession
         private var isReady = false

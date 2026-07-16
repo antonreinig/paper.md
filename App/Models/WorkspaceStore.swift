@@ -14,7 +14,7 @@ final class WorkspaceStore: ObservableObject {
     private var directoryMonitor: DirectoryMonitor?
     private var refreshTask: Task<Void, Never>?
     private var securityScopedURL: URL?
-    private let bookmarkKey = "MarkdownViewer.workspaceBookmark"
+    private let bookmarkKey = "PaperMD.workspaceBookmark"
 
     func chooseWorkspace() {
         let panel = NSOpenPanel()

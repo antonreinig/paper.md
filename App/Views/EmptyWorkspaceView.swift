@@ -5,7 +5,7 @@ struct EmptyWorkspaceView: View {
 
     var body: some View {
         ContentUnavailableView {
-            Label("Markdown Viewer", systemImage: "doc.richtext")
+            Label("paper.md", systemImage: "doc.richtext")
         } description: {
             Text(workspace.rootURL == nil ? "Open a folder to browse and edit Markdown files." : "Choose a Markdown file from the sidebar.")
         } actions: {
@@ -16,4 +16,3 @@ struct EmptyWorkspaceView: View {
         }
     }
 }
-

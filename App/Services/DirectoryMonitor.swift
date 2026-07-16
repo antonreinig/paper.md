@@ -2,7 +2,7 @@ import Foundation
 import Darwin
 
 final class DirectoryMonitor: @unchecked Sendable {
-    private let queue = DispatchQueue(label: "com.antonreinig.MarkdownViewer.directory-monitor")
+    private let queue = DispatchQueue(label: "com.antonreinig.PaperMD.directory-monitor")
     private var sources: [DispatchSourceFileSystemObject] = []
     private var descriptors: [Int32] = []
     private let onChange: @Sendable () -> Void
@@ -42,4 +42,3 @@ final class DirectoryMonitor: @unchecked Sendable {
 
     deinit { sources.forEach { $0.cancel() } }
 }
-

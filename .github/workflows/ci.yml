@@ -26,5 +26,4 @@ jobs:
         working-directory: Editor
         run: npm test
       - name: Swift tests
-        run: xcodebuild test -project MarkdownViewer.xcodeproj -scheme MarkdownViewer -destination 'platform=macOS,arch=arm64' CODE_SIGNING_ALLOWED=NO
-
+        run: xcodebuild test -project PaperMD.xcodeproj -scheme PaperMD -destination 'platform=macOS,arch=arm64' CODE_SIGNING_ALLOWED=NO

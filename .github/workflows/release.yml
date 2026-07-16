@@ -50,23 +50,23 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         run: |
           xcodebuild archive \
-            -project MarkdownViewer.xcodeproj \
-            -scheme MarkdownViewer \
+            -project PaperMD.xcodeproj \
+            -scheme PaperMD \
             -configuration Release \
-            -archivePath "$RUNNER_TEMP/MarkdownViewer.xcarchive" \
+            -archivePath "$RUNNER_TEMP/PaperMD.xcarchive" \
             DEVELOPMENT_TEAM="$APPLE_TEAM_ID" \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Developer ID Application" \
             OTHER_CODE_SIGN_FLAGS="--timestamp"
-          codesign --verify --deep --strict --verbose=2 "$RUNNER_TEMP/MarkdownViewer.xcarchive/Products/Applications/MarkdownViewer.app"
+          codesign --verify --deep --strict --verbose=2 "$RUNNER_TEMP/PaperMD.xcarchive/Products/Applications/PaperMD.app"
 
       - name: Create disk image
         run: |
           mkdir -p "$RUNNER_TEMP/dmg"
-          ditto "$RUNNER_TEMP/MarkdownViewer.xcarchive/Products/Applications/MarkdownViewer.app" "$RUNNER_TEMP/dmg/Markdown Viewer.app"
+          ditto "$RUNNER_TEMP/PaperMD.xcarchive/Products/Applications/PaperMD.app" "$RUNNER_TEMP/dmg/paper.md.app"
           ln -s /Applications "$RUNNER_TEMP/dmg/Applications"
-          hdiutil create -volname "Markdown Viewer" -srcfolder "$RUNNER_TEMP/dmg" -ov -format UDZO "$RUNNER_TEMP/MarkdownViewer.dmg"
-          codesign --force --timestamp --sign "Developer ID Application" "$RUNNER_TEMP/MarkdownViewer.dmg"
+          hdiutil create -volname "paper.md" -srcfolder "$RUNNER_TEMP/dmg" -ov -format UDZO "$RUNNER_TEMP/paper.md.dmg"
+          codesign --force --timestamp --sign "Developer ID Application" "$RUNNER_TEMP/paper.md.dmg"
 
       - name: Notarize and staple
         env:
@@ -76,13 +76,12 @@ jobs:
         run: |
           API_KEY_PATH="$RUNNER_TEMP/AuthKey_$API_KEY_ID.p8"
           echo "$API_KEY_BASE64" | base64 --decode > "$API_KEY_PATH"
-          xcrun notarytool submit "$RUNNER_TEMP/MarkdownViewer.dmg" --key "$API_KEY_PATH" --key-id "$API_KEY_ID" --issuer "$API_ISSUER_ID" --wait
-          xcrun stapler staple "$RUNNER_TEMP/MarkdownViewer.dmg"
-          xcrun stapler validate "$RUNNER_TEMP/MarkdownViewer.dmg"
+          xcrun notarytool submit "$RUNNER_TEMP/paper.md.dmg" --key "$API_KEY_PATH" --key-id "$API_KEY_ID" --issuer "$API_ISSUER_ID" --wait
+          xcrun stapler staple "$RUNNER_TEMP/paper.md.dmg"
+          xcrun stapler validate "$RUNNER_TEMP/paper.md.dmg"
 
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ inputs.version }}
-        run: gh release create "v$VERSION" "$RUNNER_TEMP/MarkdownViewer.dmg#Markdown Viewer $VERSION" --title "Markdown Viewer $VERSION" --generate-notes --target "$GITHUB_SHA"
-
+        run: gh release create "v$VERSION" "$RUNNER_TEMP/paper.md.dmg#paper.md $VERSION" --title "paper.md $VERSION" --generate-notes --target "$GITHUB_SHA"

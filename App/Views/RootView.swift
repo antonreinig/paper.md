@@ -19,7 +19,7 @@ struct RootView: View {
                 }
             }
         }
-        .navigationTitle(workspace.session?.url.lastPathComponent ?? "Markdown Viewer")
+        .navigationTitle(workspace.session?.url.lastPathComponent ?? "paper.md")
         .alert("Couldn’t complete the operation", isPresented: errorIsPresented) {
             Button("OK") { workspace.errorMessage = nil; workspace.session?.errorMessage = nil }
         } message: {
@@ -75,7 +75,7 @@ private struct EditorContainer: View {
                 Button("Keep Both") { session.saveBothVersions() }
                 Button("Decide Later", role: .cancel) {}
             } message: {
-                Text("Markdown Viewer protected both versions because your edits overlap with changes made by another process.")
+                Text("paper.md protected both versions because your edits overlap with changes made by another process.")
             }
     }
 }
