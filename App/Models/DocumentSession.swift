@@ -152,11 +152,11 @@ final class DocumentSession: ObservableObject, Identifiable {
         externalReloadTask = Task { [weak self] in
             try? await Task.sleep(for: .milliseconds(120))
             guard !Task.isCancelled else { return }
-            self?.reloadExternalChange()
+            self?.reloadFromDiskIfChanged()
         }
     }
 
-    private func reloadExternalChange() {
+    func reloadFromDiskIfChanged() {
         guard fileManager.fileExists(atPath: url.path) else { return }
         do {
             let data = try Data(contentsOf: url)
@@ -186,4 +186,3 @@ final class DocumentSession: ObservableObject, Identifiable {
         if let presenter { NSFileCoordinator.removeFilePresenter(presenter) }
     }
 }
-
