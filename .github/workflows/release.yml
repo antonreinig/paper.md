@@ -89,7 +89,14 @@ jobs:
         run: |
           API_KEY_PATH="$RUNNER_TEMP/AuthKey_$API_KEY_ID.p8"
           echo "$API_KEY_BASE64" | base64 --decode > "$API_KEY_PATH"
-          xcrun notarytool submit "$RUNNER_TEMP/paper.md.dmg" --key "$API_KEY_PATH" --key-id "$API_KEY_ID" --issuer "$API_ISSUER_ID" --wait
+          NOTARY_RESULT=$(xcrun notarytool submit "$RUNNER_TEMP/paper.md.dmg" --key "$API_KEY_PATH" --key-id "$API_KEY_ID" --issuer "$API_ISSUER_ID" --wait --output-format json)
+          echo "$NOTARY_RESULT"
+          SUBMISSION_ID=$(jq -r '.id' <<<"$NOTARY_RESULT")
+          NOTARY_STATUS=$(jq -r '.status' <<<"$NOTARY_RESULT")
+          if [ "$NOTARY_STATUS" != "Accepted" ]; then
+            xcrun notarytool log "$SUBMISSION_ID" --key "$API_KEY_PATH" --key-id "$API_KEY_ID" --issuer "$API_ISSUER_ID"
+            exit 1
+          fi
           xcrun stapler staple "$RUNNER_TEMP/paper.md.dmg"
           xcrun stapler validate "$RUNNER_TEMP/paper.md.dmg"
 
