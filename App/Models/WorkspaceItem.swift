@@ -42,7 +42,6 @@ struct WorkspaceItem: Identifiable, Hashable, Sendable {
             }
             if values.isDirectory == true {
                 let children = try scanDirectory(url, root: root, fileManager: fileManager)
-                guard !children.isEmpty else { return nil }
                 return WorkspaceItem(url: url, isDirectory: true, children: children)
             }
             guard markdownExtensions.contains(url.pathExtension.lowercased()) else { return nil }

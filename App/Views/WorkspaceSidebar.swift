@@ -10,6 +10,23 @@ struct WorkspaceSidebar: View {
             if let root = workspace.rootURL {
                 List(selection: selection) {
                     WorkspaceItemRows(items: workspace.items, expandedFolders: $expandedFolders)
+                    if !workspace.documentHeadings.isEmpty {
+                        Section("In This Document") {
+                            ForEach(workspace.documentHeadings) { heading in
+                                Button {
+                                    performEditorCommand(.navigateToHeading, payload: ["id": heading.id])
+                                } label: {
+                                    Label(heading.title, systemImage: "textformat")
+                                        .lineLimit(2)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
+                                .help("Go to \(heading.title)")
+                                .accessibilityLabel("Go to heading \(heading.title)")
+                            }
+                        }
+                    }
                 }
                 .listStyle(.sidebar)
                 .safeAreaInset(edge: .top) {
@@ -72,19 +89,27 @@ private struct WorkspaceItemRows: View {
     var body: some View {
         ForEach(items) { item in
             if item.isDirectory {
-                DisclosureGroup(isExpanded: expansionBinding(for: item.url)) {
-                    WorkspaceItemRows(
-                        items: item.children ?? [],
-                        expandedFolders: $expandedFolders
-                    )
+                let compacted = compactedFolder(item)
+                DisclosureGroup(isExpanded: expansionBinding(for: compacted.item.url)) {
+                    if compacted.item.children?.isEmpty != false {
+                        Label("Empty folder", systemImage: "tray")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .accessibilityLabel("This folder is empty")
+                    } else {
+                        WorkspaceItemRows(
+                            items: compacted.item.children ?? [],
+                            expandedFolders: $expandedFolders
+                        )
+                    }
                 } label: {
-                    Label(item.name, systemImage: "folder")
+                    Label(compacted.label, systemImage: "folder")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
-                        .onTapGesture { toggleExpansion(for: item.url) }
+                        .onTapGesture { toggleExpansion(for: compacted.item.url) }
                 }
-                .help(item.url.path)
-                .accessibilityLabel("Folder \(item.name)")
+                .help(compacted.item.url.path)
+                .accessibilityLabel("Folder \(compacted.label)")
                 .contextMenu { contextMenu(for: item) }
             } else {
                 Label(item.name, systemImage: "doc.text")
@@ -94,6 +119,19 @@ private struct WorkspaceItemRows: View {
                     .contextMenu { contextMenu(for: item) }
             }
         }
+    }
+
+    private func compactedFolder(_ folder: WorkspaceItem) -> (label: String, item: WorkspaceItem) {
+        var components = [folder.name]
+        var deepest = folder
+        while let children = deepest.children,
+              children.count == 1,
+              let onlyChild = children.first,
+              onlyChild.isDirectory {
+            components.append(onlyChild.name)
+            deepest = onlyChild
+        }
+        return (components.joined(separator: "/"), deepest)
     }
 
     private func expansionBinding(for url: URL) -> Binding<Bool> {

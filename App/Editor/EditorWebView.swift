@@ -7,12 +7,14 @@ struct EditorWebView: NSViewRepresentable {
     @ObservedObject var session: DocumentSession
     let initialScrollPosition: CGFloat
     let onScrollPositionChanged: (CGFloat) -> Void
+    let onHeadingsChanged: ([DocumentHeading]) -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(
             session: session,
             initialScrollPosition: initialScrollPosition,
-            onScrollPositionChanged: onScrollPositionChanged
+            onScrollPositionChanged: onScrollPositionChanged,
+            onHeadingsChanged: onHeadingsChanged
         )
     }
 
@@ -65,7 +67,7 @@ struct EditorWebView: NSViewRepresentable {
 
     @MainActor
     final class Coordinator: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
-        static let messageNames = ["ready", "documentChanged", "selectionChanged", "openLink", "editorError"]
+        static let messageNames = ["ready", "documentChanged", "selectionChanged", "headingsChanged", "openLink", "editorError"]
         private let logger = Logger(subsystem: "com.antonreinig.PaperMD", category: "EditorBridge")
         weak var webView: WKWebView?
         var session: DocumentSession
@@ -74,15 +76,18 @@ struct EditorWebView: NSViewRepresentable {
         private var hasLoadedDocument = false
         private let initialScrollPosition: CGFloat
         private let onScrollPositionChanged: (CGFloat) -> Void
+        private let onHeadingsChanged: ([DocumentHeading]) -> Void
 
         init(
             session: DocumentSession,
             initialScrollPosition: CGFloat,
-            onScrollPositionChanged: @escaping (CGFloat) -> Void
+            onScrollPositionChanged: @escaping (CGFloat) -> Void,
+            onHeadingsChanged: @escaping ([DocumentHeading]) -> Void
         ) {
             self.session = session
             self.initialScrollPosition = initialScrollPosition
             self.onScrollPositionChanged = onScrollPositionChanged
+            self.onHeadingsChanged = onHeadingsChanged
             super.init()
             NotificationCenter.default.addObserver(
                 self,
@@ -164,6 +169,15 @@ struct EditorWebView: NSViewRepresentable {
                 guard let body = message.body as? [String: Any], let markdown = body["markdown"] as? String else { return }
                 lastLoadedMarkdown = markdown
                 session.editorChanged(markdown)
+            case "headingsChanged":
+                guard let body = message.body as? [String: Any],
+                      let values = body["headings"] as? [[String: Any]] else { return }
+                let headings = values.compactMap { value -> DocumentHeading? in
+                    guard let id = value["id"] as? String,
+                          let title = value["title"] as? String else { return nil }
+                    return DocumentHeading(id: id, title: title)
+                }
+                onHeadingsChanged(headings)
             case "openLink":
                 guard let body = message.body as? [String: Any],
                       let value = body["url"] as? String else { return }

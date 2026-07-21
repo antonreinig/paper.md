@@ -35,6 +35,7 @@
 		B0835F2E94EDDAEB6DB1CECF /* EditorWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B58D4D383993994D69E0179 /* EditorWebView.swift */; };
 		B1DB2FF825D31B1910BF11EA /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D1A76E8011777598D0958C /* PreviewProvider.swift */; };
 		B3B0E88133420DC3C20F9278 /* MarkdownFileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AFC9C8013DF0C45E8113708 /* MarkdownFileReader.swift */; };
+		B6816A1B1AEDBBDE6524D178 /* DocumentHeading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A724A0E8D6A40CD65A4429F /* DocumentHeading.swift */; };
 		C800C8678A4E9CAFCAA05434 /* PaperMDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4627FA355C8EAE1AE220188 /* PaperMDApp.swift */; };
 		D69F5CD6CE13BAFEBA5AF63C /* WorkspaceStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E8B6DBAE47D96399EFD392 /* WorkspaceStoreTests.swift */; };
 		D8AEE8D534E2C3D5DD17BFC0 /* DocumentSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE18FA177D2A8EC67FDA28A0 /* DocumentSession.swift */; };
@@ -97,6 +98,7 @@
 		27E1EE65401FD17F6796EBC5 /* AppCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCommands.swift; sourceTree = "<group>"; };
 		39408C7CB94AFCC4F57DAA75 /* PaperMDQuickLook.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PaperMDQuickLook.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3BC9C0CF90F825DEC235C5 /* MarkdownHTMLRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownHTMLRenderer.swift; sourceTree = "<group>"; };
+		3A724A0E8D6A40CD65A4429F /* DocumentHeading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHeading.swift; sourceTree = "<group>"; };
 		3A801F2158270DE7D4502DCE /* QuickLook.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickLook.entitlements; sourceTree = "<group>"; };
 		420FA295EC1B004E470F4552 /* ThumbnailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProvider.swift; sourceTree = "<group>"; };
 		4861226274A41012FF9D8A1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 		353DDDFD6BB0109857E2E767 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3A724A0E8D6A40CD65A4429F /* DocumentHeading.swift */,
 				BE18FA177D2A8EC67FDA28A0 /* DocumentSession.swift */,
 				FA1A3736A19709B6009CAC37 /* WorkspaceItem.swift */,
 				0F36B4B59DF992A10E420135 /* WorkspaceStore.swift */,
@@ -467,6 +470,7 @@
 			files = (
 				3562C318F236552D9F888F62 /* AppCommands.swift in Sources */,
 				8812FE12E79C84217E9E2E98 /* DirectoryMonitor.swift in Sources */,
+				B6816A1B1AEDBBDE6524D178 /* DocumentHeading.swift in Sources */,
 				D8AEE8D534E2C3D5DD17BFC0 /* DocumentSession.swift in Sources */,
 				7FDB24851479D57793B03770 /* EditorCommand.swift in Sources */,
 				FB2776D292F9CE2C94E07607 /* EditorLinkResolver.swift in Sources */,
@@ -616,7 +620,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 8DTMQ4N2LA;
@@ -637,7 +641,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.2.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = NO;
@@ -803,7 +807,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 8DTMQ4N2LA;
@@ -818,7 +822,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.2.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = NO;

@@ -8,10 +8,13 @@ import { Markdown } from '@tiptap/markdown'
 import { compatibilityExtensions } from './markdown-compatibility'
 import { createLinkPopover } from './link-popover'
 import { restoreScrollPosition } from './scroll-position'
+import { syntaxHighlightedCodeBlock } from './syntax-highlighting'
+import { updateHeadingOutline } from './heading-outline'
 import './style.css'
 
 let applyingHostUpdate = false
 let linkPopover
+let lastHeadingOutline = ''
 
 const post = (name, body = {}) => {
   const handler = window.webkit?.messageHandlers?.[name]
@@ -21,7 +24,8 @@ const post = (name, body = {}) => {
 const editor = new Editor({
   element: document.querySelector('#editor'),
   extensions: [
-    StarterKit.configure({ link: false }),
+    StarterKit.configure({ link: false, codeBlock: false }),
+    syntaxHighlightedCodeBlock,
     Link.configure({
       openOnClick: false,
       autolink: true,
@@ -86,18 +90,12 @@ const editor = new Editor({
 linkPopover = createLinkPopover(editor, post)
 
 function updateHeadingIds() {
-  const used = new Map()
-  document.querySelectorAll('.document h1, .document h2, .document h3, .document h4, .document h5, .document h6').forEach(heading => {
-    const base = (heading.textContent || '')
-      .trim()
-      .toLowerCase()
-      .replace(/[^\p{L}\p{N}\s-]/gu, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-') || 'section'
-    const count = used.get(base) || 0
-    used.set(base, count + 1)
-    heading.id = count ? `${base}-${count}` : base
-  })
+  const outline = updateHeadingOutline(document.querySelector('.document'))
+  const serializedOutline = JSON.stringify(outline)
+  if (serializedOutline !== lastHeadingOutline) {
+    lastHeadingOutline = serializedOutline
+    post('headingsChanged', { headings: outline })
+  }
 }
 
 function updateSelectionState() {
@@ -147,6 +145,12 @@ const commands = {
   undo: () => editor.chain().focus().undo().run(),
   redo: () => editor.chain().focus().redo().run(),
   focus: () => editor.commands.focus(),
+  navigateToHeading: payload => {
+    const heading = payload?.id && document.getElementById(payload.id)
+    if (!heading) return false
+    heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    return true
+  },
 }
 
 window.editorBridge = {
@@ -176,6 +180,10 @@ window.editorBridge = {
 // Local browser previews can provide a document without affecting the bundled file-based app.
 if (location.protocol.startsWith('http')) {
   const previewParameters = new URLSearchParams(location.search)
+  const previewAppearance = previewParameters.get('appearance')
+  if (previewAppearance === 'light' || previewAppearance === 'dark') {
+    document.documentElement.style.colorScheme = previewAppearance
+  }
   const previewMarkdown = previewParameters.get('markdown')
   if (previewMarkdown) window.editorBridge.loadMarkdown(previewMarkdown)
   if (previewParameters.has('showLinkPopover')) {

@@ -7,6 +7,7 @@ enum EditorCommandName: String, Sendable {
     case insertTable, addRowBefore, addRowAfter, deleteRow
     case addColumnBefore, addColumnAfter, deleteColumn, toggleHeaderRow, deleteTable
     case undo, redo, focus
+    case navigateToHeading
 }
 
 extension Notification.Name {

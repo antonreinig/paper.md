@@ -35,4 +35,30 @@ final class WorkspaceItemTests: XCTestCase {
         XCTAssertTrue(WorkspaceItem.contains(root.appendingPathComponent("file.md"), in: root))
         XCTAssertFalse(WorkspaceItem.contains(URL(fileURLWithPath: "/tmp/notes-private/file.md"), in: root))
     }
+
+    func testScanKeepsEmptyFolders() throws {
+        let workspace = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(
+            at: workspace.appendingPathComponent("Empty"),
+            withIntermediateDirectories: true
+        )
+        defer { try? FileManager.default.removeItem(at: workspace) }
+
+        let items = try WorkspaceItem.scan(root: workspace)
+        XCTAssertEqual(items.map(\.name), ["Empty"])
+        XCTAssertEqual(items.first?.children, [])
+    }
+
+    func testScanKeepsSingleChildFolderChains() throws {
+        let workspace = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let leaf = workspace.appendingPathComponent("One/Two/Three")
+        try FileManager.default.createDirectory(at: leaf, withIntermediateDirectories: true)
+        try Data("# Note".utf8).write(to: leaf.appendingPathComponent("Note.md"))
+        defer { try? FileManager.default.removeItem(at: workspace) }
+
+        let items = try WorkspaceItem.scan(root: workspace)
+        XCTAssertEqual(items.first?.name, "One")
+        XCTAssertEqual(items.first?.children?.first?.name, "Two")
+        XCTAssertEqual(items.first?.children?.first?.children?.first?.name, "Three")
+    }
 }

@@ -9,6 +9,7 @@ final class WorkspaceStore: ObservableObject {
     @Published private(set) var items: [WorkspaceItem] = []
     @Published var selectedFile: URL?
     @Published private(set) var session: DocumentSession?
+    @Published private(set) var documentHeadings: [DocumentHeading] = []
     @Published var errorMessage: String?
 
     private var directoryMonitor: DirectoryMonitor?
@@ -40,6 +41,7 @@ final class WorkspaceStore: ObservableObject {
     func closeWorkspace() {
         session?.flush()
         session = nil
+        documentHeadings = []
         selectedFile = nil
         rootURL = nil
         items = []
@@ -97,6 +99,7 @@ final class WorkspaceStore: ObservableObject {
         }
         session?.flush()
         selectedFile = url
+        documentHeadings = []
         guard let url else { session = nil; return }
         do {
             session = try DocumentSession(url: url, workspaceRootURL: rootURL) { [weak self] movedURL in
@@ -122,6 +125,11 @@ final class WorkspaceStore: ObservableObject {
     func rememberScrollPosition(_ position: CGFloat, for url: URL) {
         guard position.isFinite else { return }
         documentScrollPositions[normalizedFileURL(url)] = max(0, position)
+    }
+
+    func updateDocumentHeadings(_ headings: [DocumentHeading], for url: URL) {
+        guard normalizedFileURL(url) == selectedFile.map(normalizedFileURL) else { return }
+        documentHeadings = headings
     }
 
     func createFile() {

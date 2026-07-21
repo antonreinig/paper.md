@@ -20,13 +20,13 @@ Open a `.md` file and edit the formatted document directly. There is no source m
 
 ## Why paper.md
 
-- **Edit the document, not its syntax.** Headings, lists, links, code, and tables look finished while you edit them.
+- **Edit the document, not its syntax.** Editorial headings, readable body text, syntax-highlighted code, lists, links, and tables look finished while you edit them.
 - **Keep plain Markdown.** Files remain portable UTF-8 text and work with Git, scripts, and every other Markdown tool.
 - **Work safely alongside AI.** Changes from Codex and other local tools appear automatically; overlapping edits are surfaced instead of silently overwritten.
-- **Use a Mac app, not an IDE.** Browse folders in a native sidebar, use standard shortcuts and undo, and preview files in Finder with Quick Look.
+- **Use a Mac app, not an IDE.** Browse compact folder trees and the open document’s H1 outline in a native sidebar, use standard shortcuts and undo, and preview files in Finder with Quick Look.
 - **Stay private and offline.** No accounts, analytics, cloud services, remote scripts, or runtime network dependencies.
 
-> **Early preview:** [Download paper.md 0.1.2](https://github.com/antonreinig/paper.md/releases/download/v0.1.2/paper.md-0.1.2.dmg) for Apple Silicon Macs running macOS 14 or newer.
+> **Early preview:** [Download paper.md 0.2.0](https://github.com/antonreinig/paper.md/releases/download/v0.2.0/paper.md-0.2.0.dmg) for Apple Silicon Macs running macOS 14 or newer.
 
 ## Build and run
 

@@ -4,9 +4,10 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject private var workspace: WorkspaceStore
     @AppStorage("appearance") private var appearance = "system"
+    @State private var columnVisibility: NavigationSplitViewVisibility = .detailOnly
 
     var body: some View {
-        NavigationSplitView {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
             WorkspaceSidebar()
                 .navigationSplitViewColumnWidth(min: 190, ideal: 250, max: 360)
         } detail: {
@@ -17,6 +18,9 @@ struct RootView: View {
                         initialScrollPosition: workspace.scrollPosition(for: session.url),
                         onScrollPositionChanged: { position in
                             workspace.rememberScrollPosition(position, for: session.url)
+                        },
+                        onHeadingsChanged: { headings in
+                            workspace.updateDocumentHeadings(headings, for: session.url)
                         }
                     )
                         .id(session.id)
@@ -45,6 +49,9 @@ struct RootView: View {
             workspace.session?.flush()
         }
         .preferredColorScheme(preferredColorScheme)
+        .onChange(of: workspace.session?.id) { _, sessionID in
+            if sessionID != nil { columnVisibility = .detailOnly }
+        }
     }
 
     private var errorIsPresented: Binding<Bool> {
@@ -67,12 +74,14 @@ private struct EditorContainer: View {
     @ObservedObject var session: DocumentSession
     let initialScrollPosition: CGFloat
     let onScrollPositionChanged: (CGFloat) -> Void
+    let onHeadingsChanged: ([DocumentHeading]) -> Void
 
     var body: some View {
         EditorWebView(
             session: session,
             initialScrollPosition: initialScrollPosition,
-            onScrollPositionChanged: onScrollPositionChanged
+            onScrollPositionChanged: onScrollPositionChanged,
+            onHeadingsChanged: onHeadingsChanged
         )
             .toolbar { EditorToolbar() }
             .confirmationDialog(

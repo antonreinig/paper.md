@@ -6,6 +6,7 @@ import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
 import { Markdown } from '@tiptap/markdown'
 import { compatibilityExtensions } from './markdown-compatibility'
+import { syntaxHighlightedCodeBlock } from './syntax-highlighting'
 import { afterEach, describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 
@@ -14,7 +15,8 @@ let editor
 function makeEditor(markdown) {
   editor = new Editor({
     extensions: [
-      StarterKit.configure({ link: false }),
+      StarterKit.configure({ link: false, codeBlock: false }),
+      syntaxHighlightedCodeBlock,
       Link,
       TableKit,
       TaskList,
@@ -52,6 +54,14 @@ let answer = 42
     expect(result).toContain('> quote')
     expect(result).toContain('```swift')
   })
+
+  it.each(['typescript', 'python', 'javascript', 'java', 'csharp', 'php', 'bash', 'cpp', 'hcl', 'go'])(
+    'round-trips the language on a %s code fence',
+    language => {
+      const source = `\`\`\`${language}\nconst answer = 42\n\`\`\``
+      expect(makeEditor(source).getMarkdown()).toContain(`\`\`\`${language}`)
+    },
+  )
 
   it('round-trips a GFM table and can add a row', () => {
     const source = `| Name | Value |
